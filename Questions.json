@@ -29,30 +29,11 @@
      },
      {
        "id": 2,
-       "text": "No"
+       "text": "Female"
      }
      {
        "id": 3,
-       "text": "No"
-     }
-   ]
- },
- {
-   "id": 20,
-   "type": "multiple-choice",
-   "text": "What is your age?",
-   "answers": [
-     {
-       "id": 1,
-       "text": "Male"
-     },
-     {
-       "id":2,
-       "text": "No"
-     }
-     {
-       "id": 3,
-       "text": "No"
+       "text": "Other"
      }
    ]
  },

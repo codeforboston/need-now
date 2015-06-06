@@ -2,9 +2,45 @@ extends layout
 
 block content
   div.container
-    h1.title= "Resource finder"
-    h4.subtitle= "What can we do to help?"
-    -for(var prop in question)
-      p #{prop}: #{question[prop]}
+    h1.title= 'Resource finder'
+    h4.subtitle= question.text
+
+    form(name="question", action="/questions", method="post").question-form
+      if question.answer_mode == 'single'
+        // will get answers in array and return ID as string
+        div.form-group
+          select.form-control
+            -for(i in question.answer_choices)
+              option(value=question.answer_choices[i].id)= question.answer_choices[i].text
+
+      else if question.answer_mode == 'multiple'
+        // will get answers in array and return array of IDs as strings
+        -for(i in question.answer_choices)
+          div.checkbox
+            label.checkbox-inline
+              input(type='checkbox', value=question.answer_choices[i].id)
+              span.multiple-span= question.answer_choices[i].text
+      else if question.answer_mode == 'string'
+        // return string
+        div.form-group
+          
+      
+      else if question.answer_mode == 'numeric'
+        // return number as a string
+        div.form-group
+          
+      
+      else if question.answer_mode == 'boolean'
+        div.form-group
+          
+        // return 0 or 1 as string
+      
+      else
+        p= 'ERROR: Form control is invalid.'
+      
+    button(type='submit').btn-form-submit.big-button= 'Submit'
+
+
 
     p.footer= "This is a footer. It contains stuff that goes in the footer of the webpage but this is just filler text."
+

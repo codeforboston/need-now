@@ -4,6 +4,7 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var routes = require('./routes/index');
 var questions = require('./routes/questions');
@@ -20,6 +21,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+app.use(session({
+  maxAge: 3600000, // Preserve session for just 1h
+  secret: 'awesome lobstah'
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);

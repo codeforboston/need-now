@@ -11,19 +11,18 @@ block content
                     th
                     th Name
                     th Transit
-                    th About        
+                    th Phone
             tbody
                 each provider in providers
                     tr
-                        td 
+                        td
                             if provider.open_now
                                 button.btn.btn-success.btn-xs= 'Open Now'
-                            else 
+                            else
                                 button.btn.btn-danger.btn-xs= 'Closed Now'
-                        td 
-                            p= provider.name
-                        td 
-                            p= provider.public_transit
-                        td 
-                            p= provider.more_info
-        
+                        td
+                            p= provider.ProgramName
+                        td
+                            p= provider.Transit
+                        td
+                            p= provider.Phone

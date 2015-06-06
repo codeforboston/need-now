@@ -1,0 +1,63 @@
+var questions = [
+ {
+   "id": 1,
+   "text": "What are you looking for today?",
+   "answer_mode": "single",
+   "answer_choices": [
+     {
+       "id": 1,
+       "text": "Shelter"
+     },
+     {
+       "id": 2,
+       "text": "Food"
+     },
+     {
+       "id": 3,
+       "text": "Medical Assistance"
+     }
+   ]
+ },
+ {
+   "id": 2,
+   "text": "What is your gender?",
+   "answer_mode": "single",
+   "answer_choices": [
+     {
+       "id": 1,
+       "text": "Male"
+     },
+     {
+       "id": 2,
+       "text": "Female"
+     },
+     {
+       "id": 3,
+       "text": "Other"
+     }
+   ]
+ },
+ {
+   "id": 3,
+   "text": "What is your age?",
+   "answer_mode": "single",
+   "answer_choices": [
+   {
+       "id": 1,
+       "text": "Under 18"
+     },
+     {
+       "id":2,
+       "text": "18 to 28"
+     },
+     {
+       "id": 3,
+       "text": "29 to 65"
+     },
+     {
+       "id": 4,
+       "text": "65+"
+     }
+   ]
+ }
+]

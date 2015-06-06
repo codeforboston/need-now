@@ -1,0 +1,81 @@
+[
+ {
+   "id": 000,
+   "type": "multiple-choice",
+   "text": "What are you looking for today?",
+   "answers": [
+     {
+       "id": 100,
+       "text": "Shelter"
+     },
+     {
+       "id": 200,
+       "text": "Food"
+     }
+     {
+       "id": 300,
+       "text": "Medical Assistance"
+     }
+   ]
+ },
+ {
+   "id": 100,
+   "type": "multiple-choice",
+   "text": "What is your gender?",
+   "answers": [
+     {
+       "id": 1100,
+       "text": "Male"
+     },
+     {
+       "id": 1200,
+       "text": "No"
+     }
+     {
+       "id": 1300,
+       "text": "No"
+     }
+   ]
+ },
+ {
+   "id": 200,
+   "type": "multiple-choice",
+   "text": "What is your age?",
+   "answers": [
+     {
+       "id": 210,
+       "text": "Male"
+     },
+     {
+       "id": 220,
+       "text": "No"
+     }
+     {
+       "id": 230,
+       "text": "No"
+     }
+   ]
+ },
+ {
+   "id": 300,
+   "type": "multiple-choice",
+   "text": "What is your age?",
+   "answers": [
+     {
+       "id": 310,
+       "text": "under 18"
+     },
+     {
+       "id": 320,
+       "text": "18 to 28"
+     }
+     {
+       "id": 330,
+       "text": "29 to 65"
+     }
+      {
+       "id": 340,
+       "text": "over 65"
+     }
+   ]
+] 

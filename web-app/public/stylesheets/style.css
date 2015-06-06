@@ -1,8 +1,20 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin-top: 30px;
 }
 
-a {
-  color: #00B7FF;
+.title {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 72px;
+  color: #2E2E2E;
+
+}
+
+.subtitle {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 32px;
+  color: #4C4C4C;
+}
+
+.footer {
+  color: #4C4C4C;
 }

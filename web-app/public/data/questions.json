@@ -1,4 +1,4 @@
-var questions = [
+[
  {
    "id": 1,
    "text": "What are you looking for today?",

@@ -4,3 +4,7 @@ block content
   h1= "Questions!"
   -for(var prop in question)
     p #{prop}: #{question[prop]}
+  form(name="question", action="/questions", method="post")
+    input(type="text", name="question")
+    input(type="text", name="answer")
+    input(type="submit", value="send!")

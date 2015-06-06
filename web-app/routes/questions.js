@@ -6,7 +6,7 @@ router.get('/', function(req, res) {
   var dummy_question = {
     id: 12,
     text: "What is your gender?",
-    answer_mode: "single",
+    answer_mode: "multiple",
     answer_choices: [
       {
         id: 1,

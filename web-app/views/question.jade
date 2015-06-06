@@ -15,21 +15,24 @@ block content
 
       else if question.answer_mode == 'multiple'
         // will get answers in array and return array of IDs as strings
-        div.form-group
-
+        -for(i in question.answer_choices)
+          div.checkbox
+            label.checkbox-inline
+              input(type='checkbox', value=question.answer_choices[i].id)
+              span.multiple-span= question.answer_choices[i].text
       else if question.answer_mode == 'string'
         // return string
         div.form-group
-
+          
       
       else if question.answer_mode == 'numeric'
         // return number as a string
         div.form-group
-
+          
       
       else if question.answer_mode == 'boolean'
         div.form-group
-
+          
         // return 0 or 1 as string
       
       else

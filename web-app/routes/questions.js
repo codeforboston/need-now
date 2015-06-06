@@ -46,7 +46,12 @@ router.post('/', function(req, res) {
       }
     ]
   }
-  res.render('question', { question: dummy_question });
+  // Just for testing, if we have 3 diferent answers, go to results
+  if (Object.keys(req.session.answers).length > 3) {
+    res.render('results', { question: dummy_question });
+  } else {
+    res.render('question', { question: dummy_question });
+  }
 });
 
 module.exports = router;

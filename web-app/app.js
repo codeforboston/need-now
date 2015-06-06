@@ -8,7 +8,7 @@ var session = require('express-session');
 
 var routes = require('./routes/index');
 var questions = require('./routes/questions');
-
+var results = require('./routes/results');
 var app = express();
 
 // view engine setup
@@ -28,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/questions', questions);
+app.use('/results', results);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

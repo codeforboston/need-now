@@ -1,0 +1,56 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  margin-top: 30px;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+::selection {
+  background: #2E2E2E;
+  color: white;
+}
+
+.big-button {
+  font-size: 44px;
+  background: white;
+  border: 12px solid #2E2E2E;
+  border-radius: 18px;
+  padding: 20px;
+  margin: 8px auto;
+  outline: none;
+}
+
+.big-button:hover {
+  background: rgb(200, 200, 200);
+  outline: none;
+}
+
+.big-button:active {
+  background: #2E2E2E;
+  color: white;
+}
+
+
+
+.title {
+  font-size: 72px;
+  color: #2E2E2E;
+
+}
+
+.subtitle {
+  font-size: 32px;
+  color: #4C4C4C;
+  margin-bottom: 50px;
+}
+
+.btn-form-submit {
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+.footer {
+  color: #4C4C4C;
+  margin: 20px auto;
+  display: block;
+}

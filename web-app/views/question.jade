@@ -1,0 +1,6 @@
+extends layout
+
+block content
+  h1= "Questions!"
+  -for(var prop in question)
+    p #{prop}: #{question[prop]}

@@ -23,6 +23,14 @@ router.get('/', function(req, res) {
 
 /* POST answers. */
 router.post('/', function(req, res) {
+  // Save question in session hash variable 'answers':
+  // {
+  //   'question1': 'answer',
+  //   'question2': 'answer2'
+  // }
+  req.session.answers = req.session.answers || {}
+  req.session.answers[req.body.question] = req.body.answer;
+  console.log(req.session.answers);
   var dummy_question = {
     id: 12,
     text: req.body.question,

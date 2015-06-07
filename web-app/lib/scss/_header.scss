@@ -1,0 +1,18 @@
+.title {
+  font-size: 72px;
+  color: #2E2E2E;
+  @media (max-width: 768px) {
+  	font-size: 54px;
+  }
+
+}
+
+.subtitle {
+  font-size: 32px;
+  color: #4C4C4C;
+  margin-bottom: 50px;
+  @media (max-width: 768px) {
+  	font-size: 32px;
+	margin-bottom: 15px;
+  }
+}

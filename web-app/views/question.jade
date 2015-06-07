@@ -2,10 +2,10 @@ extends layout
 
 block content
   div.container
-    h1.title= 'Resource finder'
+    h1.title= 'Homeless Resource finder'
     h4.subtitle= question.text
 
-    form(name="question", action="/questions", method="post").question-form
+    form.question-form(name="question", action="/questions", method="post")
       if question.answer_mode == 'single'
         // will get answers in array and return ID as string
         div.form-group
@@ -15,30 +15,34 @@ block content
 
       else if question.answer_mode == 'multiple'
         // will get answers in array and return array of IDs as strings
-        -for(i in question.answer_choices)
-          div.checkbox
-            label.checkbox-inline
-              input(type='checkbox', value=question.answer_choices[i].id)
-              span.multiple-span= question.answer_choices[i].text
-      else if question.answer_mode == 'string'
+        div.form-group
+          -for(i in question.answer_choices)
+            div.checkbox.multiple-checkbox-div
+              label.checkbox
+                input.multiple-check(type='checkbox', value=question.answer_choices[i].id)
+                span.multiple-span= question.answer_choices[i].text
+      else if question.answer_mode == 'string' || question.answer_mode == 'text'
         // return string
         div.form-group
+          input.form-string-input.form-control(type="text")
           
       
       else if question.answer_mode == 'numeric'
         // return number as a string
         div.form-group
+          input.form-numeric-input.form-control.input-lg(type="number")
           
       
       else if question.answer_mode == 'boolean'
-        div.form-group
-          
         // return 0 or 1 as string
+        div.form-group
+          // needs implementation
+
       
       else
         p= 'ERROR: Form control is invalid.'
       
-    button(type='submit').btn-form-submit.big-button= 'Submit'
+      button(type='submit').btn-form-submit.big-button= 'Submit'
 
 
 

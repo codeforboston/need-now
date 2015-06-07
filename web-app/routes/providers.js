@@ -59,6 +59,9 @@ var constructServiceList = function(provider) {
   if (provider.LGBTQ == '1') {
     services.push('LGBTQ');
   }
+  if (provider.Sober == '1') {
+      services.push('Dry Shelter');
+  }
   if (services.length === 0) {
     services.push('None');
   }

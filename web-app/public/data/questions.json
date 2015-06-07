@@ -44,19 +44,15 @@
    "answer_choices": [
    {
        "id": 1,
-       "text": "Under 18"
+       "text": "Under 30"
      },
      {
        "id":2,
-       "text": "18 to 28"
+       "text": "30 to 44"
      },
      {
        "id": 3,
-       "text": "29 to 65"
-     },
-     {
-       "id": 4,
-       "text": "65+"
+       "text": "45+"
      }
    ]
  }

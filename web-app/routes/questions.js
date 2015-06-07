@@ -28,6 +28,12 @@ var nextQuestion = function(answers) {
 
 /* GET questions page. */
 router.get('/', function(req, res) {
+  // Mocking answers, remove!!!
+  req.session.answers = {
+    '1': '1',
+    '2': '2',
+    '3': '3'
+  }
   next = nextQuestion(req.session.answers);
   if (next == null) // No more questions, show providers
     res.redirect('/providers');

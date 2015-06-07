@@ -80,7 +80,10 @@ var constructServiceList = function(provider) {
     services.push('LGBTQ');
   }
   if (provider.Sober == '1') {
-      services.push('Dry Shelter');
+    services.push('Dry Shelter');
+  }
+  if (provider.HomelessOnly == '1') {
+    services.push('Homeless Only');
   }
   if (services.length === 0) {
     services.push('None');

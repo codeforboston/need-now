@@ -1,0 +1,19 @@
+$button-blue: rgb(52, 70, 139);
+
+.big-button {
+  font-size: 44px;
+  background: $button-blue;
+  color: white;
+  border: 3px solid #2E2E2E;
+  border-radius: 18px;
+  padding: 20px;
+  margin: 8px auto;
+  outline: none;
+  &:hover {
+    background: lighten($button-blue, 10%);
+    outline: none;
+  }
+  &:active {
+    background: darken($button-blue, 10%);;
+  }
+}

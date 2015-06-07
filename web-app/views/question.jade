@@ -10,7 +10,7 @@ block content
       if question.answer_mode == 'single'
         // will get answers in array and return ID as string
         div.form-group
-          select.form-control(name="answer")
+          select.single-select.form-control(name="answer")
             -for(i in question.answer_choices)
               option(value=question.answer_choices[i].id)= question.answer_choices[i].text
 
@@ -44,8 +44,4 @@ block content
         p= 'ERROR: Form control is invalid.'
       
       button(type='submit').btn-form-submit.big-button= 'Submit'
-
-
-
-    p.footer= "This is a footer. It contains stuff that goes in the footer of the webpage but this is just filler text."
 

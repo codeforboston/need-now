@@ -3,7 +3,7 @@ extends layout
 block content
   div.container
     h1.title= 'Homeless Resource finder'
-    h4.subtitle= question.text
+    h2.subtitle= question.text
 
     form.question-form(name="question", action="/questions", method="post")
       input(type='hidden' name='question' value=question.id)

@@ -20,7 +20,7 @@
 	font-size: 72px;
 	height: 160px;
 	margin: 10px auto;
-	&:focus {
+	&:focus:not(:active) {
 		outline: none;
 		box-shadow: none;
 		border: 8px solid #2E2E2E;

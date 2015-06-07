@@ -13,6 +13,9 @@ $button-blue: rgb(52, 70, 139);
     background: lighten($button-blue, 10%);
     outline: none;
   }
+  &:focus {
+    box-shadow: 0 0 10px 3px $button-blue;
+  }
   &:active {
     background: darken($button-blue, 10%);;
   }

@@ -7,12 +7,32 @@ var providers = require('../public/data/providers.json');
 
 // Parse answers from session hash into a more readable JSON object
 var parsedAnswers = function(answers) {
-  // Mocked for now
-  return {
-    gender: "male",
-    age: "under 29",
-    interests: ["medical assistance", "other"]
+  parsed = {
+    interests: [] // So we can push
   }
+  switch(answers['1']) {
+    case '1':
+      parsed.interests.push('shelter');
+      break;
+    case '2':
+      parsed.interests.push('food');
+      break;
+    case '3':
+      parsed.interests.push('medical');
+  }
+  switch(answers['2']) {
+    case '1':
+      parsed.gender = 'male';
+      break;
+    case '2':
+      parsed.gender = 'female';
+      break;
+    default:
+      parsed.gender = 'other';
+  }
+  parsed.age = String(answers['3']);
+
+  return parsed;
 }
 
 // Filter the providers list based on the answers in the session hash

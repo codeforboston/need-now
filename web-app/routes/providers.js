@@ -71,19 +71,16 @@ var filterProvidersByGender = function(providers, answer) {
 var constructServiceList = function(provider) {
   var services = [];
   if (provider.HIV == '1') {
-    services.push('HIV');
+    services.push('provides HIV/AIDS services or testing');
   }
   if (provider.Veteran == '1') {
-    services.push('Veteran');
+    services.push('serves veterans');
   }
   if (provider.LGBTQ == '1') {
-    services.push('LGBTQ');
+    services.push('serves LGBTQ community');
   }
   if (provider.Sober == '1') {
-    services.push('Dry Shelter');
-  }
-  if (provider.HomelessOnly == '1') {
-    services.push('Homeless Only');
+    services.push('only permits guests who are not actively using');
   }
   if (services.length === 0) {
     services.push('None');

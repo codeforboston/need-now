@@ -2,7 +2,9 @@ extends layout
 
 block content
   div.container
-    h1.title= 'Homeless Resource finder'
+    h1.title
+      span.need= 'need'
+      span.now= 'now'
     h2.subtitle= question.text
 
     form.question-form(name="question", action="/questions", method="post")

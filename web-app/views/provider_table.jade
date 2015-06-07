@@ -2,33 +2,30 @@ extends layout
 
 block content
   div.container
-    h1.title= "Providers you matched"
+    h3 Providers Results
+    h4 Here are the best places for you to go to find #{answers.interests} in Cambridge. We built this list for a #{answers.gender} #{answers.age}.
     div.panel.panel-default
-        <!-- Table -->
         table.table
             thead
                 tr
                     th
                     th Name
-                    th Transit
-                    th Min. Age
-                    th Max. Age
-                    th Gender
+                    th Transit/Contact
+                    th Support Services
             tbody
                 each provider in providers
                     tr
                         td
-                            if provider.open_now
-                                button.btn.btn-success.btn-xs= 'Open Now'
-                            else
-                                button.btn.btn-danger.btn-xs= 'Closed Now'
                         td
                             p= provider.ProgramName
                         td
-                            p= provider.Transit
+                            if (provider.Transit)
+                                p Public Transit: #{provider.Transit}
+                            p= Address
+                            p= provider.Address
+                            p= provider.City + ' '+provider.State + ' '+ provider.Zip
+                            if provider.Phone
+                                p Phone: #{provider.Phone}
                         td
-                            p= provider.MinAge
-                        td
-                            p= provider.MaxAge
-                        td
-                            p= provider.Gender
+                            p= provider.serviceList
+

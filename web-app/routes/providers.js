@@ -24,6 +24,9 @@ var filteredProviders = function(answers) {
   filtered = filterProvidersByInterests(providers, answers['1']);
   filtered = filterProvidersByGender(filtered, answers['2']);
   filtered = filterProvidersByAge(filtered, answers['3']);
+  for (var i = 0; i < filtered.length; i++) {
+    filtered[i].serviceList = constructServiceList(filtered[i]);
+  };
   return filtered;
 }
 
@@ -44,6 +47,23 @@ var filterProvidersByGender = function(providers, answer) {
       });
   }
   return providers;
+}
+
+var constructServiceList = function(provider) {
+  var services = [];
+  if (provider.HIV == '1') {
+    services.push('HIV');
+  }
+  if (provider.Veteran == '1') {
+    services.push('Veteran');
+  }
+  if (provider.LGBTQ == '1') {
+    services.push('LGBTQ');
+  }
+  if (services.length === 0) {
+    services.push('None');
+  }
+  return services.join(', ');
 }
 
 // Filter providers by interests

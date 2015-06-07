@@ -45,7 +45,7 @@ var filteredProviders = function(answers) {
   filtered = filterProvidersByGender(filtered, answers['2']);
   filtered = filterProvidersByAge(filtered, answers['3']);
   for (var i = 0; i < filtered.length; i++) {
-    filtered[i].serviceList = constructServiceList(filtered[i]);
+    filtered[i].servicesArray = constructServiceList(filtered[i]);
   };
   return filtered;
 }
@@ -71,21 +71,21 @@ var filterProvidersByGender = function(providers, answer) {
 var constructServiceList = function(provider) {
   var services = [];
   if (provider.HIV == '1') {
-    services.push('provides HIV/AIDS services or testing');
+    services.push('Provides HIV/AIDS services or testing');
   }
   if (provider.Veteran == '1') {
-    services.push('serves veterans');
+    services.push('Serves veterans');
   }
   if (provider.LGBTQ == '1') {
-    services.push('serves LGBTQ community');
+    services.push('Serves LGBTQ community');
   }
   if (provider.Sober == '1') {
-    services.push('only permits guests who are not actively using');
+    services.push('Only permits guests who are not actively using');
   }
   if (services.length === 0) {
     services.push('None');
   }
-  return services.join(', ');
+  return services;
 }
 
 // Filter providers by interests

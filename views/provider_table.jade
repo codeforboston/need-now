@@ -24,5 +24,7 @@ block content
                         if provider.Phone
                             p Phone: #{provider.Phone}
                     td
-                        p= provider.serviceList
+                        ul
+                            each service in provider.servicesArray
+                                li #{service}
 

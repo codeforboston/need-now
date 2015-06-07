@@ -82,9 +82,6 @@ var constructServiceList = function(provider) {
   if (provider.Sober == '1') {
     services.push('Only permits guests who are not actively using');
   }
-  if (services.length === 0) {
-    services.push('None');
-  }
   return services;
 }
 

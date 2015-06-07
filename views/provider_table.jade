@@ -4,28 +4,25 @@ block content
   div.container
     h3 Providers Results
     h4 Here are the best places for you to go to find #{answers.interests} in Cambridge. We built this list for someone who identified as #{answers.gender}, age #{answers.age}.
-    div.panel.panel-default
-        table.table
-            thead
+    table.table.table-striped.table-bordered
+        thead
+            tr
+                th Name
+                th Transit/Contact
+                th Additional Notes
+        tbody
+            each provider in providers
                 tr
-                    th
-                    th Name
-                    th Transit/Contact
-                    th Additional Notes
-            tbody
-                each provider in providers
-                    tr
-                        td
-                        td
-                            p= provider.ProgramName
-                        td
-                            if (provider.Transit)
-                                p Public Transit: #{provider.Transit}
-                            p= Address
-                            p= provider.Address
-                            p= provider.City + ' '+provider.State + ' '+ provider.Zip
-                            if provider.Phone
-                                p Phone: #{provider.Phone}
-                        td
-                            p= provider.serviceList
+                    td
+                        p= provider.ProgramName
+                    td
+                        if (provider.Transit)
+                            p Public Transit: #{provider.Transit}
+                        p= Address
+                        p= provider.Address
+                        p= provider.City + ' '+provider.State + ' '+ provider.Zip
+                        if provider.Phone
+                            p Phone: #{provider.Phone}
+                    td
+                        p= provider.serviceList
 

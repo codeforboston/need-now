@@ -6,10 +6,11 @@ block content
     h4.subtitle= question.text
 
     form.question-form(name="question", action="/questions", method="post")
+      input(type='hidden' name='question' value=question.id)
       if question.answer_mode == 'single'
         // will get answers in array and return ID as string
         div.form-group
-          select.form-control
+          select.form-control(name="answer")
             -for(i in question.answer_choices)
               option(value=question.answer_choices[i].id)= question.answer_choices[i].text
 
@@ -19,18 +20,18 @@ block content
           -for(i in question.answer_choices)
             div.checkbox.multiple-checkbox-div
               label.checkbox
-                input.multiple-check(type='checkbox', value=question.answer_choices[i].id)
+                input.multiple-check(name="answer",type='checkbox', value=question.answer_choices[i].id)
                 span.multiple-span= question.answer_choices[i].text
       else if question.answer_mode == 'string' || question.answer_mode == 'text'
         // return string
         div.form-group
-          input.form-string-input.form-control(type="text")
+          input.form-string-input.form-control(name="answer",type="text")
           
       
       else if question.answer_mode == 'numeric'
         // return number as a string
         div.form-group
-          input.form-numeric-input.form-control.input-lg(type="number")
+          input.form-numeric-input.form-control.input-lg(name="answer",type="number")
           
       
       else if question.answer_mode == 'boolean'

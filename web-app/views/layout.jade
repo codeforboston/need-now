@@ -13,3 +13,10 @@ html
       document.addEventListener("touchstart", function(){}, true);
   body
     block content
+    div.container
+      #google_translate_element
+        script(type='text/javascript').
+            function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.BOTTOM_RIGHT}, 'google_translate_element');
+            }
+          script(type='text/javascript', src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit')

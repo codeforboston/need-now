@@ -18,7 +18,7 @@ var parsedAnswers = function(answers) {
 // Filter the providers list based on the answers in the session hash
 var filteredProviders = function(answers) {
   // Question IDs and answers:
-  // "1" - Interests: "1" (Shelter), "2" (Food), "3" (Medical)
+  // "1" - Interests: "1" (Shelter), "2" (Food), "3" (Medical), "4" (Other)
   // "2" - Gender: "1" (Male), "2" (Female), "3" (Other)
   // "3" - Age: (numeric/string)
   filtered = filterProvidersByInterests(providers, answers['1']);
@@ -46,7 +46,6 @@ var filterProvidersByGender = function(providers, answer) {
         return provider['Gender'] == 'all';
       });
   }
-  return providers;
 }
 
 var constructServiceList = function(provider) {
@@ -68,8 +67,24 @@ var constructServiceList = function(provider) {
 
 // Filter providers by interests
 var filterProvidersByInterests = function(providers, answer) {
-  // Mocked, just returns unfiltered results
-  return providers;
+  switch(answer) {
+    case '1': // Shelter
+      return _.filter(providers, function(provider) {
+        return provider['Category'] == 'SHELTER';
+      });
+    case '2': // Food
+      return _.filter(providers, function(provider) {
+        return provider['Category'] == 'FOOD';
+      });
+    case '3': // Medical
+      return _.filter(providers, function(provider) {
+        return provider['Category'] == 'MEDICAL';
+      });
+    default: // Unfilter, but avoid 'NO' category
+      return _.filter(providers, function(provider) {
+        return provider['Category'] != 'NO';
+      });
+  }
 }
 
 // Filter providers by age

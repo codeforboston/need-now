@@ -11,7 +11,9 @@ block content
                     th
                     th Name
                     th Transit
-                    th Phone
+                    th Min. Age
+                    th Max. Age
+                    th Gender
             tbody
                 each provider in providers
                     tr
@@ -25,4 +27,8 @@ block content
                         td
                             p= provider.Transit
                         td
-                            p= provider.Phone
+                            p= provider.MinAge
+                        td
+                            p= provider.MaxAge
+                        td
+                            p= provider.Gender

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var _ = require("underscore");
 
 // Pre-load list of providers
 var providers = require('../public/data/providers.json');
@@ -19,11 +20,30 @@ var filteredProviders = function(answers) {
   // Question IDs and answers:
   // "1" - Interests: "1" (Shelter), "2" (Food), "3" (Medical)
   // "2" - Gender: "1" (Male), "2" (Female), "3" (Other)
-  // "3" - Age: "1" (Under 30), "2" (30 to 44), "3" (45+)
+  // "3" - Age: (numeric/string)
   filtered = filterProvidersByInterests(providers, answers['1']);
   filtered = filterProvidersByGender(filtered, answers['2']);
   filtered = filterProvidersByAge(filtered, answers['3']);
   return filtered;
+}
+
+// Filter providers by gender
+var filterProvidersByGender = function(providers, answer) {
+  switch(answer) {
+    case '1': // Men only and all
+      return _.filter(providers, function(provider) {
+        return provider['Gender'] == 'men' || provider['Gender'] == 'all';
+      });
+    case '2': // Women only and all
+      return _.filter(providers, function(provider) {
+        return provider['Gender'] == 'women' || provider['Gender'] == 'all';
+      });
+    default: // Only all
+      return _.filter(providers, function(provider) {
+        return provider['Gender'] == 'all';
+      });
+  }
+  return providers;
 }
 
 // Filter providers by interests
@@ -32,16 +52,12 @@ var filterProvidersByInterests = function(providers, answer) {
   return providers;
 }
 
-// Filter providers by gender
-var filterProvidersByGender = function(providers, answer) {
-  // Mocked, just returns unfiltered results
-  return providers;
-}
-
 // Filter providers by age
 var filterProvidersByAge = function(providers, answer) {
-  // Mocked, just returns unfiltered results
-  return providers;
+  return _.filter(providers, function(provider) {
+    return parseInt(provider['MinAge']) <= parseInt(answer) &&
+           parseInt(provider['MaxAge']) >= parseInt(answer);
+  });
 }
 
 /* GET home page. */

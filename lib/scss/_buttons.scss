@@ -1,6 +1,6 @@
 .big-button {
   font-size: 44px;
-  background: $button-blue;
+  background: $nice-orange;
   color: white;
   border: 3px solid #2E2E2E;
   border-radius: 18px;
@@ -8,13 +8,13 @@
   margin: 8px auto;
   outline: none;
   &:hover {
-    background: lighten($button-blue, 10%);
+    background: darken($nice-orange, 8%);
     outline: none;
   }
   &:focus {
-    box-shadow: 0 0 10px 3px $button-blue;
+    box-shadow: 0 0 10px 3px $nice-orange;
   }
   &:active {
-    background: darken($button-blue, 10%);;
+    background: darken($nice-orange, 20%);;
   }
 }

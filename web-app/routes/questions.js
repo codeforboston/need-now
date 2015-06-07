@@ -30,9 +30,9 @@ var nextQuestion = function(answers) {
 router.get('/', function(req, res) {
   // Mocking answers, remove!!!
   req.session.answers = {
-    '1': '1',
+    '1': '2',
     '2': '3',
-    '3': '99'
+    '3': '18'
   }
   next = nextQuestion(req.session.answers);
   if (next == null) // No more questions, show providers

@@ -2,7 +2,8 @@ var gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	autoprefixer = require('gulp-autoprefixer'),
 	watch = require('gulp-watch'),
-	notify = require('gulp-notify');
+	notify = require('gulp-notify'),
+	server = require('gulp-develop-server');
 
 gulp.task('sass', function() {
 	return gulp.src('./lib/scss/style.scss')
@@ -12,10 +13,24 @@ gulp.task('sass', function() {
 	.pipe(notify({ message: 'Sass has been compiled' }));
 });
 
-gulp.task('watch', function() {
+gulp.task('sass-watch', function() {
 	gulp.watch('./lib/scss/*.scss', ['sass']);
 });
 
-gulp.task('default', function() {
-	gulp.start(['watch']);
+gulp.task('server-restart', function() {
+	server.restart();
+});
+
+gulp.task('js-watch', function() {
+	server.listen({path: 'bin/www'});
+	gulp.watch('./routes/*.js', ['server-restart']);
+	gulp.watch('./bin/www', ['server-restart'])
 })
+
+gulp.task('dev', function() {
+	gulp.start(['sass-watch', 'js-watch']);
+});
+
+gulp.task('default', function() {
+	gulp.start(['sass-watch']);
+});

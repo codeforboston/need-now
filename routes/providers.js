@@ -1,6 +1,6 @@
 var express = require('express');
-var router = express.Router();
-var _ = require('underscore');
+var router  = express.Router();
+var _       = require('underscore');
 
 // Pre-load list of providers
 var providers = require('../public/data/providers.json');
@@ -8,25 +8,31 @@ var providers = require('../public/data/providers.json');
 // Parse answers from session hash into a more readable JSON object
 var parsedAnswers = function(answers) {
   var parsed = { interests: [] }; // So we can push
-  switch(answers['1']) {
-    case '1':
+  switch (answers['1']) {
+    case '1': {
       parsed.interests.push('shelter');
       break;
-    case '2':
+    }
+    case '2': {
       parsed.interests.push('food');
       break;
-    case '3':
+    }
+    case '3': {
       parsed.interests.push('medical');
+    }
   }
-  switch(answers['2']) {
-    case '1':
+  switch (answers['2']) {
+    case '1': {
       parsed.gender = 'male';
       break;
-    case '2':
+    }
+    case '2': {
       parsed.gender = 'female';
       break;
-    default:
+    }
+    default: {
       parsed.gender = 'other';
+    }
   }
   parsed.age = String(answers['3']);
 
@@ -52,41 +58,48 @@ var constructServiceList = function(provider) {
 
 // Filter providers by gender
 var filterProvidersByGender = function(providers, answer) {
-  switch(answer) {
-    case '1': // Men only and all
+  switch (answer) {
+    case '1': { // Men only and all
       return _.filter(providers, function(provider) {
         return provider.Gender == 'men' || provider.Gender == 'all';
       });
-    case '2': // Women only and all
+    }
+    case '2': { // Women only and all
       return _.filter(providers, function(provider) {
         return provider.Gender == 'women' || provider.Gender == 'all';
       });
-    default: // Only all
+    }
+    default: { // Only all
       return _.filter(providers, function(provider) {
         return provider.Gender == 'all';
       });
+    }
   }
 };
 
 // Filter providers by interests
 var filterProvidersByInterests = function(providers, answer) {
-  switch(answer) {
-    case '1': // Shelter
+  switch (answer) {
+    case '1': { // Shelter
       return _.filter(providers, function(provider) {
         return provider.Category == 'SHELTER';
       });
-    case '2': // Food
+    }
+    case '2': { // Food
       return _.filter(providers, function(provider) {
         return provider.Category == 'FOOD';
       });
-    case '3': // Medical
+    }
+    case '3': { // Medical
       return _.filter(providers, function(provider) {
         return provider.Category == 'MEDICAL';
       });
-    default: // Unfilter, but avoid 'NO' category
+    }
+    default: { // Unfilter, but avoid 'NO' category
       return _.filter(providers, function(provider) {
         return provider.Category != 'NO';
       });
+    }
   }
 };
 

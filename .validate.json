@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "lint": "jshint --reporter node_modules/jshint-stylish-ex/stylish.js ."
+    "lint": "./node_modules/jshint/bin/jshint --reporter node_modules/jshint-stylish-ex/stylish.js .",
+    "style": "./node_modules/jscs/bin/jscs *.js routes/*.js"
   },
-  "pre-commit": ["lint", "validate", "test"]
+  "pre-commit": ["lint", "style"]
 }

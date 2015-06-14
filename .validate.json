@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "lint": "jshint --reporter node_modules/jshint-stylish-ex/stylish.js ."
+  },
+  "pre-commit": ["lint", "validate", "test"]
+}

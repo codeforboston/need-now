@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var _ = require("underscore");
+var _ = require('underscore');
 
 // Pre-load list of questions
 var questions = require('../public/data/questions.json');
@@ -10,11 +10,14 @@ var questions = require('../public/data/questions.json');
 // answered question or null if they all have responses recorded.
 var nextQuestion = function(answers) {
   // If we have all the answers, return null
-  if (answers && Object.keys(answers).length == questions.length) return null;
+  if (answers && Object.keys(answers).length == questions.length) {
+    return null;
+  }
 
   // If no answers yet, return the first non-answered question and return it
-  if (!answers || answers == {})
+  if (!answers || answers == {}) {
     return questions[0];
+  }
 
   // Otherwise, return the first non-answered question
   var unanswered = _.filter(questions, function(question) {
@@ -22,19 +25,22 @@ var nextQuestion = function(answers) {
   });
 
   // Return first unanswered (or null if for some weird reason we got none
-  if (unanswered.length > 0) return unanswered[0];
+  if (unanswered.length > 0) {
+    return unanswered[0];
+  }
   return null;
-}
+};
 
 /* GET questions page. */
 router.get('/', function(req, res) {
   // Reset answers with every first GET request
-  req.session.answers = {}
-  next = nextQuestion(req.session.answers);
-  if (next == null) // No more questions, show providers
+  req.session.answers = {};
+  var next = nextQuestion(req.session.answers);
+  if (next === null) { // No more questions, show providers
     res.redirect('/providers');
-  else // Render next question
+  } else { // Render next question
     res.render('question', { question: next });
+  }
 });
 
 /* POST answers. */
@@ -44,16 +50,17 @@ router.post('/', function(req, res) {
   //   'question1': 'answer',
   //   'question2': 'answer2'
   // }
-  req.session.answers = req.session.answers || {}
+  req.session.answers = req.session.answers || {};
   req.session.answers[req.body.question] = req.body.answer;
   console.log('Questions so far:');
   console.log(req.session.answers);
 
-  next = nextQuestion(req.session.answers);
-  if (next == null) // No more questions, show providers
+  var next = nextQuestion(req.session.answers);
+  if (next === null) { // No more questions, show providers
     res.redirect('/providers');
-  else // Render next question
+  } else { // Render next question
     res.render('question', { question: next });
+  }
 });
 
 module.exports = router;

@@ -1,14 +1,16 @@
-var gulp         = require('gulp'),
-	  sass         = require('gulp-sass'),
-	  autoprefixer = require('gulp-autoprefixer'),
-	  notify       = require('gulp-notify'),
-	  server       = require('gulp-develop-server'),
-    jshint       = require('gulp-jshint');
+var gulp         = require('gulp');
+var sass         = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
+var notify       = require('gulp-notify');
+var server       = require('gulp-develop-server');
+var jshint       = require('gulp-jshint');
+var jscs         = require('gulp-jscs');
 
+// Task to compile Sass into CSS
 gulp.task('sass', function() {
-	return gulp.src('./lib/scss/style.scss')
-		.pipe(sass({'outputStyle': 'compressed'}).on('error', sass.logError))
-		.pipe(
+  return gulp.src('./lib/scss/style.scss')
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(
       autoprefixer(
         'last 2 version',
         'safari 5',
@@ -19,35 +21,47 @@ gulp.task('sass', function() {
         'android 4'
       )
     )
-	  .pipe(gulp.dest('./public/stylesheets'))
-	  .pipe(notify({ message: 'Sass has been compiled' }));
+  .pipe(gulp.dest('./public/stylesheets'))
+  .pipe(notify({ message: 'Sass has been compiled' }));
 });
 
-gulp.task('sass-watch', function() {
-	gulp.watch('./lib/scss/*.scss', ['sass']);
-});
-
-gulp.task('js-watch', function() {
-	server.listen({path: 'bin/www'});
-	gulp.watch('./routes/*.js', ['server-restart', 'lint']);
-	gulp.watch('./*.js', ['server-restart', 'lint']);
-	gulp.watch('./bin/www', ['server-restart']);
-});
-
-gulp.task('server-restart', function() {
-	server.restart();
-});
-
+// Task to lint the code
 gulp.task('lint', function() {
-  return gulp.src(['./routes/*.js','./*.js'])
+  return gulp.src(['./routes/*.js', './*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter(require('jshint-stylish-ex')));
 });
 
-gulp.task('dev', function() {
-	gulp.start(['sass-watch', 'js-watch']);
+// Task to check that coding style guidelines are met
+gulp.task('style', function() {
+  return gulp.src(['./routes/*.js', './*.js'])
+    .pipe(jscs());
 });
 
+// Task to restart the server
+gulp.task('server-restart', function() {
+  server.restart();
+});
+
+// Task to start the server and watch for JS changes
+gulp.task('js-watch', function() {
+  server.listen({path: 'bin/www'});
+  gulp.watch('./routes/*.js', ['server-restart', 'lint', 'style']);
+  gulp.watch('./*.js', ['server-restart', 'lint', 'style']);
+  gulp.watch('./bin/www', ['server-restart']);
+});
+
+// Task to wath for Sass changes
+gulp.task('sass-watch', function() {
+  gulp.watch('./lib/scss/*.scss', ['sass']);
+});
+
+// Main development task, starts the server and watches for Sass and JS changes
+gulp.task('dev', function() {
+  gulp.start(['sass-watch', 'js-watch']);
+});
+
+// Default task, just watch for Sass changes
 gulp.task('default', function() {
-	gulp.start(['sass-watch']);
+  gulp.start(['sass-watch']);
 });

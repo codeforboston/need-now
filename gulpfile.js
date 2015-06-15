@@ -5,6 +5,8 @@ var notify       = require('gulp-notify');
 var server       = require('gulp-develop-server');
 var jshint       = require('gulp-jshint');
 var jscs         = require('gulp-jscs');
+var uglify       = require('gulp-uglify');
+var rename       = require('gulp-rename');
 
 // Task to compile Sass into CSS
 gulp.task('sass', function() {
@@ -21,8 +23,9 @@ gulp.task('sass', function() {
         'android 4'
       )
     )
+  .pipe(rename({suffix: 'min'}))
   .pipe(gulp.dest('./public/stylesheets'))
-  .pipe(notify({ message: 'Sass has been compiled' }));
+  .pipe(notify({message: 'Sass has been compiled'}));
 });
 
 // Task to lint the code
@@ -44,7 +47,7 @@ gulp.task('server-restart', function() {
 });
 
 // Task to start the server and watch for JS changes
-gulp.task('js-watch', function() {
+gulp.task('back-js-watch', function() {
   server.listen({path: 'bin/www'});
   gulp.watch('./routes/*.js', ['server-restart', 'lint', 'style']);
   gulp.watch('./*.js', ['server-restart', 'lint', 'style']);
@@ -56,12 +59,26 @@ gulp.task('sass-watch', function() {
   gulp.watch('./lib/scss/*.scss', ['sass']);
 });
 
-// Main development task, starts the server and watches for Sass and JS changes
-gulp.task('dev', function() {
-  gulp.start(['sass-watch', 'js-watch']);
+// Task to compile frontend JS
+gulp.task('front-js', function() {
+  return gulp.src('./lib/js/*.js')
+    .pipe(uglify())
+    .pipe(rename({suffix: '.min'}))
+    .pipe(notify({message: 'Frontend JS has been compiled'}))
+  .pipe(gulp.dest('./public/scripts'));
 });
 
-// Default task, just watch for Sass changes
+// Task to watch for frontend JS changes
+gulp.task('front-js-watch', function() {
+  gulp.watch('./lib/js/*.js', ['front-js']);
+});
+
+// Main development task, starts the server and watches for Sass and JS changes
+gulp.task('dev', function() {
+  gulp.start(['sass-watch', 'back-js-watch', 'front-js-watch']);
+});
+
+// Default task, just runs dev
 gulp.task('default', function() {
-  gulp.start(['sass-watch']);
+  gulp.start(['dev']);
 });

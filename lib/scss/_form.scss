@@ -22,7 +22,7 @@
 .form-numeric-input, .form-string-input {
 	border-radius: 20px;
 	margin: 10px auto;
-	&:focus:not(:active) {
+	&:focus, &:active {
 		outline: none;
 		box-shadow: none;
 		border: 8px solid #2E2E2E;

@@ -23,7 +23,7 @@ gulp.task('sass', function() {
         'android 4'
       )
     )
-  .pipe(rename({suffix: 'min'}))
+  .pipe(rename({suffix: '.min'}))
   .pipe(gulp.dest('./public/stylesheets'))
   .pipe(notify({message: 'Sass has been compiled'}));
 });

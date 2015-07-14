@@ -3,7 +3,7 @@ var router  = express.Router();
 var _       = require('underscore');
 
 var request = require('sync-request');
-var res = request('GET', 'http://example.com');
+var res = request('GET', 'https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec');
 console.log(res.getBody());
 
 // var https   = require('https');

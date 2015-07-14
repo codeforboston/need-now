@@ -10,6 +10,8 @@ var request = require('request');
 // console.log(res.getBody().statusCode);
 // console.log('should be done');
 
+var providersjson = {};
+
 // Pre-load list of providers
 var providers = require('../public/data/providers.json');
 //var providers = require('https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec');
@@ -124,10 +126,9 @@ var filterProvidersByAge = function(providers, answer) {
 var getProviders = function() {
   request('https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec', function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log(body); // Show the HTML for the Google homepage.
-    }
-    else {
-      console.log(body);
+      //console.log(body);
+      providersjson = JSON.parse(body);
+      console.log(providersjson);
     }
   });
 

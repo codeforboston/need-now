@@ -5,7 +5,7 @@ var _       = require('underscore');
 var request = require('sync-request');
 console.log('attempting GET request');
 var res = request('GET', 'https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec');
-console.log(res.getBody());
+console.log(res.getBody().statusCode);
 console.log('should be done');
 
 // var https   = require('https');

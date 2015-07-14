@@ -1,46 +1,13 @@
 var express = require('express');
 var router  = express.Router();
 var _       = require('underscore');
+var https   = require('https');
 
-var request = require('sync-request');
-console.log('attempting GET request');
-var res = request('GET', 'https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec');
-console.log(res.getBody().statusCode);
-console.log('should be done');
-
-// var https   = require('https');
-
-// var options = {
-//   host: 'script.google.com',
-//   path: '/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec'
-// };
-
-// var providersjson = {};
-
-// var callback = function(response) {
-//   var str = '';
-//   console.log(options.host + ':' + response.statusCode);
-
-//   response.on('data', function(chunk) {
-//     str += chunk;
-//   });
-
-//   response.on('end', function () {
-//     console.log(str);
-//     // providersjson = JSON.parse(str);
-
-//     console.log('ended');
-//   });
-// };
-
-// var req = https.request(options, callback);
-// req.end();
-
-// req.on('error', function(e) {
-//   console.error(e);
-// });
-
-
+// var request = require('sync-request');
+// console.log('attempting GET request');
+// var res = request('GET', 'https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec');
+// console.log(res.getBody().statusCode);
+// console.log('should be done');
 
 // Pre-load list of providers
 var providers = require('../public/data/providers.json');
@@ -152,8 +119,42 @@ var filterProvidersByAge = function(providers, answer) {
   });
 };
 
+
+var getProviders = function() {
+  var options = {
+    host: 'script.google.com',
+    path: '/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec'
+  };
+
+  //var providersjson = {};
+
+  var callback = function(response) {
+    var str = '';
+    console.log(options.host + ':' + response.statusCode);
+
+    response.on('data', function(chunk) {
+      str += chunk;
+    });
+
+    response.on('end', function () {
+      console.log(str);
+      // providersjson = JSON.parse(str);
+
+      console.log('ended');
+    });
+  };
+
+  var req = https.request(options, callback);
+  req.end();
+
+  req.on('error', function(e) {
+    console.error(e);
+  });
+};
+
 // Filter the providers list based on the answers in the session hash
 var filteredProviders = function(answers) {
+  getProviders();
   // Question IDs and answers:
   // "1" - Interests: "1" (Shelter), "2" (Food), "3" (Medical), "4" (Other)
   // "2" - Gender: "1" (Male), "2" (Female), "3" (Other)

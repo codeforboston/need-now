@@ -1,37 +1,44 @@
 var express = require('express');
 var router  = express.Router();
 var _       = require('underscore');
-var https   = require('https');
 
-var options = {
-  host: 'script.google.com',
-  path: '/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec'
-};
+var request = require('sync-request');
+var res = request('GET', 'http://example.com');
+console.log(res.getBody());
 
-var providersjson = {};
+// var https   = require('https');
 
-var callback = function(response) {
-  var str = '';
-  console.log(options.host + ':' + response.statusCode);
+// var options = {
+//   host: 'script.google.com',
+//   path: '/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec'
+// };
 
-  response.on('data', function(chunk) {
-    str += chunk;
-  });
+// var providersjson = {};
 
-  response.on('end', function () {
-    console.log(str);
-    providersjson = JSON.parse(str);
+// var callback = function(response) {
+//   var str = '';
+//   console.log(options.host + ':' + response.statusCode);
 
-    console.log('ended');
-  });
-};
+//   response.on('data', function(chunk) {
+//     str += chunk;
+//   });
 
-var req = https.request(options, callback);
-req.end();
+//   response.on('end', function () {
+//     console.log(str);
+//     // providersjson = JSON.parse(str);
 
-req.on('error', function(e) {
-  console.error(e);
-});
+//     console.log('ended');
+//   });
+// };
+
+// var req = https.request(options, callback);
+// req.end();
+
+// req.on('error', function(e) {
+//   console.error(e);
+// });
+
+
 
 // Pre-load list of providers
 var providers = require('../public/data/providers.json');

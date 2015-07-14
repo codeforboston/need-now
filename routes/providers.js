@@ -1,9 +1,40 @@
 var express = require('express');
 var router  = express.Router();
 var _       = require('underscore');
+// var https   = require("https");
+
+// var options = {
+//   host: 'script.google.com',
+//   path: '/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec'
+// };
+
+// var providersjson = {};
+
+// callback = function(response) {
+//   var str = '';
+//   console.log(options.host + ':' + response.statusCode);
+
+//   response.on('data', function(chunk) {
+//     str += chunk;
+//   });
+//   response.on('end', function () {
+//     console.log(str);
+//     providersjson = JSON.parse(str);
+
+//     console.log('ended');
+//   });
+// }
+
+// var req = https.request(options, callback);
+// req.end();
+
+// req.on('error', function(e) {
+//   console.error(e);
+// });
 
 // Pre-load list of providers
 var providers = require('../public/data/providers.json');
+//var providers = require('https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec');
 
 // Parse answers from session hash into a more readable JSON object
 var parsedAnswers = function(answers) {

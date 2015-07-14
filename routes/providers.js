@@ -3,6 +3,8 @@ var router  = express.Router();
 var _       = require('underscore');
 // var https   = require("https");
 
+console.log('hi there');
+
 // var options = {
 //   host: 'script.google.com',
 //   path: '/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec'

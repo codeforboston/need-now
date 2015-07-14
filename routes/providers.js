@@ -1,7 +1,8 @@
 var express = require('express');
 var router  = express.Router();
 var _       = require('underscore');
-var https   = require('https');
+// var https   = require('https');
+var request = require('request');
 
 // var request = require('sync-request');
 // console.log('attempting GET request');
@@ -121,35 +122,50 @@ var filterProvidersByAge = function(providers, answer) {
 
 
 var getProviders = function() {
-  var options = {
-    host: 'script.google.com',
-    path: '/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec'
-  };
-
-  //var providersjson = {};
-
-  var callback = function(response) {
-    var str = '';
-    console.log(options.host + ':' + response.statusCode);
-
-    response.on('data', function(chunk) {
-      str += chunk;
-    });
-
-    response.on('end', function () {
-      console.log(str);
-      // providersjson = JSON.parse(str);
-
-      console.log('ended');
-    });
-  };
-
-  var req = https.request(options, callback);
-  req.end();
-
-  req.on('error', function(e) {
-    console.error(e);
+  request('https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log(body); // Show the HTML for the Google homepage.
+    }
+    else {
+      console.log(body);
+    }
   });
+
+  // var options = {
+  //   host: 'script.google.com',
+  //   path: '/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec'
+  // };
+
+  // //var providersjson = {};
+
+  // var callback = function(response) {
+  //   if (response.statusCode > 300 && response.statusCode < 400 && res.headers.location) {
+  //     if (url.parse(res.headers.location).hostname) {
+
+  //     }
+  //   }
+
+  //   var str = '';
+  //   console.log(options.host + ':' + response.statusCode);
+
+  //   response.on('data', function(chunk) {
+  //     str += chunk;
+  //   });
+
+  //   response.on('end', function () {
+  //     console.log(str);
+  //     // providersjson = JSON.parse(str);
+
+  //     console.log('ended');
+  //   });
+  // };
+
+  // var req = https.request(options, callback);
+  // req.end();
+
+  // req.on('error', function(e) {
+  //   console.error(e);
+  // });
 };
 
 // Filter the providers list based on the answers in the session hash

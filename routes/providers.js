@@ -10,7 +10,7 @@ var request = require('request');
 // console.log(res.getBody().statusCode);
 // console.log('should be done');
 
-var providersjson = {};
+// var providersjson = {};
 
 // Pre-load list of providers
 // var providers = require('../public/data/providers.json');
@@ -174,13 +174,15 @@ var filteredProviders = function(answers, callback) {
   request('https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec', function (error, response, body) {
     if (!error && response.statusCode == 200) {
       console.log(body);
-      providers = JSON.parse(body);
+      var providers = JSON.parse(body);
       // console.log(providersjson);
 
-      var filtered = providers;
-      // var filtered = filterProvidersByInterests(providers, answers['1']);
-      // filtered = filterProvidersByGender(filtered, answers['2']);
-      // filtered = filterProvidersByAge(filtered, answers['3']);
+      var filtered = filterProvidersByInterests(providers, answers['1']);
+      filtered = filterProvidersByGender(filtered, answers['2']);
+      filtered = filterProvidersByAge(filtered, answers['3']);
+
+      // filtered = providers;
+
       for (var i = 0; i < filtered.length; i++) {
         filtered[i].servicesArray = constructServiceList(filtered[i]);
       }

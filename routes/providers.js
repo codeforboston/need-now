@@ -13,8 +13,8 @@ var request = require('request');
 var providersjson = {};
 
 // Pre-load list of providers
-var providers = require('../public/data/providers.json');
-//var providers = require('https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec');
+// var providers = require('../public/data/providers.json');
+// var providers = require('https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec');
 
 // Parse answers from session hash into a more readable JSON object
 var parsedAnswers = function(answers) {
@@ -171,18 +171,32 @@ var getProviders = function() {
 
 // Filter the providers list based on the answers in the session hash
 var filteredProviders = function(answers) {
-  getProviders();
+  request('https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      //console.log(body);
+      providersjson = JSON.parse(body);
+      console.log(providersjson);
+
+      var filtered = filterProvidersByInterests(providersjson, answers['1']);
+      filtered = filterProvidersByGender(filtered, answers['2']);
+      filtered = filterProvidersByAge(filtered, answers['3']);
+      for (var i = 0; i < filtered.length; i++) {
+        filtered[i].servicesArray = constructServiceList(filtered[i]);
+      }
+      return filtered;
+    }
+  });
   // Question IDs and answers:
   // "1" - Interests: "1" (Shelter), "2" (Food), "3" (Medical), "4" (Other)
   // "2" - Gender: "1" (Male), "2" (Female), "3" (Other)
   // "3" - Age: (numeric/string)
-  var filtered = filterProvidersByInterests(providers, answers['1']);
-  filtered = filterProvidersByGender(filtered, answers['2']);
-  filtered = filterProvidersByAge(filtered, answers['3']);
-  for (var i = 0; i < filtered.length; i++) {
-    filtered[i].servicesArray = constructServiceList(filtered[i]);
-  }
-  return filtered;
+  // var filtered = filterProvidersByInterests(providers, answers['1']);
+  // filtered = filterProvidersByGender(filtered, answers['2']);
+  // filtered = filterProvidersByAge(filtered, answers['3']);
+  // for (var i = 0; i < filtered.length; i++) {
+  //   filtered[i].servicesArray = constructServiceList(filtered[i]);
+  // }
+  // return filtered;
 };
 
 /* GET home page. */

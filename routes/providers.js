@@ -175,7 +175,7 @@ var filteredProviders = function(answers, callback) {
     if (!error && response.statusCode == 200) {
       //console.log(body);
       providersjson = JSON.parse(body);
-      console.log(providersjson);
+      // console.log(providersjson);
 
       var filtered = filterProvidersByInterests(providersjson, answers['1']);
       filtered = filterProvidersByGender(filtered, answers['2']);
@@ -183,6 +183,7 @@ var filteredProviders = function(answers, callback) {
       for (var i = 0; i < filtered.length; i++) {
         filtered[i].servicesArray = constructServiceList(filtered[i]);
       }
+      console.log(filtered);
       callback(filtered);
     }
   });

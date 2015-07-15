@@ -123,14 +123,14 @@ var filterProvidersByAge = function(providers, answer) {
 };
 
 
-var getProviders = function() {
-  request('https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec', function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      //console.log(body);
-      providersjson = JSON.parse(body);
-      console.log(providersjson);
-    }
-  });
+// var getProviders = function() {
+//   request('https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec', function (error, response, body) {
+//     if (!error && response.statusCode == 200) {
+//       //console.log(body);
+//       providersjson = JSON.parse(body);
+//       console.log(providersjson);
+//     }
+//   });
 
   // var options = {
   //   host: 'script.google.com',
@@ -167,10 +167,10 @@ var getProviders = function() {
   // req.on('error', function(e) {
   //   console.error(e);
   // });
-};
+// };
 
 // Filter the providers list based on the answers in the session hash
-var filteredProviders = function(answers) {
+var filteredProviders = function(answers, callback) {
   request('https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec', function (error, response, body) {
     if (!error && response.statusCode == 200) {
       //console.log(body);
@@ -183,7 +183,7 @@ var filteredProviders = function(answers) {
       for (var i = 0; i < filtered.length; i++) {
         filtered[i].servicesArray = constructServiceList(filtered[i]);
       }
-      return filtered;
+      callback(filtered);
     }
   });
   // Question IDs and answers:
@@ -201,9 +201,11 @@ var filteredProviders = function(answers) {
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('provider_table', {
-    providers: filteredProviders(req.session.answers),
-    answers: parsedAnswers(req.session.answers)
+  filteredProviders(req.session.answers, function(providers) {
+    res.render('provider_table', {
+      providers: providers,
+      answers: parsedAnswers(req.session.answers)
+    });
   });
 });
 

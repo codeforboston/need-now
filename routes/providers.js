@@ -173,13 +173,14 @@ var filterProvidersByAge = function(providers, answer) {
 var filteredProviders = function(answers, callback) {
   request('https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec', function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      //console.log(body);
-      providersjson = JSON.parse(body);
+      console.log(body);
+      providers = JSON.parse(body);
       // console.log(providersjson);
 
-      var filtered = filterProvidersByInterests(providersjson, answers['1']);
-      filtered = filterProvidersByGender(filtered, answers['2']);
-      filtered = filterProvidersByAge(filtered, answers['3']);
+      var filtered = providers;
+      // var filtered = filterProvidersByInterests(providers, answers['1']);
+      // filtered = filterProvidersByGender(filtered, answers['2']);
+      // filtered = filterProvidersByAge(filtered, answers['3']);
       for (var i = 0; i < filtered.length; i++) {
         filtered[i].servicesArray = constructServiceList(filtered[i]);
       }

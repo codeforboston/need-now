@@ -1,9 +1,10 @@
 var express = require('express');
 var router  = express.Router();
 var _       = require('underscore');
+var request = require('request');
 
-// Pre-load list of providers
-var providers = require('../public/data/providers.json');
+// Pre-load list of providers. This was a previous method of loading provider information from a static JSON file.
+// var providers = require('../public/data/providers.json'); 
 
 // Parse answers from session hash into a more readable JSON object
 var parsedAnswers = function(answers) {
@@ -111,26 +112,43 @@ var filterProvidersByAge = function(providers, answer) {
   });
 };
 
-// Filter the providers list based on the answers in the session hash
-var filteredProviders = function(answers) {
-  // Question IDs and answers:
-  // "1" - Interests: "1" (Shelter), "2" (Food), "3" (Medical), "4" (Other)
-  // "2" - Gender: "1" (Male), "2" (Female), "3" (Other)
-  // "3" - Age: (numeric/string)
-  var filtered = filterProvidersByInterests(providers, answers['1']);
-  filtered = filterProvidersByGender(filtered, answers['2']);
-  filtered = filterProvidersByAge(filtered, answers['3']);
-  for (var i = 0; i < filtered.length; i++) {
-    filtered[i].servicesArray = constructServiceList(filtered[i]);
-  }
-  return filtered;
+// Filter the providers list based on the answers in the session hash, then renders the page through the callback.
+var filteredProviders = function(answers, callback) {
+  // Simple GET call to the Google Apps Script, which will redirect to a block of JSON text. request traverses the redirect by default.
+  request('https://script.google.com/macros/s/AKfycbxDgI7u4IHiai0ZsG2sXdG846Ulc06aKCxV1UF228mPhv8fo7c/exec', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      // Parse the returned JSON string into an array of providers objects
+      var providers = JSON.parse(body);
+
+      // Run the answer filters consecutively
+      // Question IDs and answers:
+      // "1" - Interests: "1" (Shelter), "2" (Food), "3" (Medical), "4" (Other)
+      // "2" - Gender: "1" (Male), "2" (Female), "3" (Other)
+      // "3" - Age: (numeric/string)
+      var filtered = filterProvidersByInterests(providers, answers['1']);
+      filtered = filterProvidersByGender(filtered, answers['2']);
+      filtered = filterProvidersByAge(filtered, answers['3']);
+
+      for (var i = 0; i < filtered.length; i++) {
+        filtered[i].servicesArray = constructServiceList(filtered[i]);
+      }
+      
+      // console.log(filtered);
+      
+      // Run the provided callback function, most likely the page renderer
+      callback(filtered);
+    }
+  });
 };
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('provider_table', {
-    providers: filteredProviders(req.session.answers),
-    answers: parsedAnswers(req.session.answers)
+  // Because of the asynchronous GET call, we need to pass the renderer as a callback that waits on the GET request to complete and be processed.
+  filteredProviders(req.session.answers, function(providers) {
+    res.render('provider_table', {
+      providers: providers,   // filteredProviders will provide the callback with the filtered provider list.
+      answers: parsedAnswers(req.session.answers)
+    });
   });
 });
 

@@ -5,26 +5,90 @@ block content
     h3.title Providers Results
     h4.subtitle Here are some helpful places for you to go to find #{answers.interests} in Cambridge. We built this list for someone who identified as #{answers.gender}, age #{answers.age}.
     table.table.table-striped.table-bordered
-        thead
-            tr
-                th Name
-                th Transit/Contact
-                th Additional Notes
-        tbody
-            each provider in providers
-                tr
-                    td
-                        p= provider.ProgramName
-                    td
-                        if (provider.Transit)
-                            p Public Transit: #{provider.Transit}
-                        p= Address
-                        p= provider.Address
-                        p= provider.City + ' '+provider.State + ' '+ provider.Zip
-                        if provider.Phone
-                            p Phone: #{provider.Phone}
-                    td
-                        ul
-                            each service in provider.servicesArray
-                                li #{service}
+      thead
+        tr
+          th Name
+          th Open hours
+          th Transit/Contact
+          th Additional Notes
+      tbody
+        each provider in providers
+          case provider.open
+            when 0
+              tr.open
+                td
+                  p= provider.ProgramName
+                td
+                  p= 'Open now. Open hours:'
+                  p= provider.Days
+                td
+                  if (provider.Transit)
+                    p Public Transit: #{provider.Transit}
+                  p= Address
+                  p= provider.Address
+                  p= provider.City + ' '+provider.State + ' '+ provider.Zip
+                  if provider.Phone
+                    p Phone: #{provider.Phone}
+                td
+                  ul
+                    each service in provider.servicesArray
+                      li #{service}
+
+            when 1
+              tr.see-details
+                td
+                  p= provider.ProgramName
+                td
+                  p= provider.Days
+                td
+                  if (provider.Transit)
+                    p Public Transit: #{provider.Transit}
+                  p= Address
+                  p= provider.Address
+                  p= provider.City + ' '+provider.State + ' '+ provider.Zip
+                  if provider.Phone
+                    p Phone: #{provider.Phone}
+                td
+                  ul
+                    each service in provider.servicesArray
+                      li #{service}
+
+            when 2
+              tr.unsure
+                td
+                  p= provider.ProgramName
+                td
+                  p= 'Unsure'
+                td
+                  if (provider.Transit)
+                    p Public Transit: #{provider.Transit}
+                  p= Address
+                  p= provider.Address
+                  p= provider.City + ' '+provider.State + ' '+ provider.Zip
+                  if provider.Phone
+                    p Phone: #{provider.Phone}
+                td
+                  ul
+                    each service in provider.servicesArray
+                      li #{service}
+
+            when 3
+              tr.closed
+                td
+                  p= provider.ProgramName
+                td
+                  p= 'Closed now. Open hours:'
+                  p= provider.Days
+                td
+                  if (provider.Transit)
+                    p Public Transit: #{provider.Transit}
+                  p= Address
+                  p= provider.Address
+                  p= provider.City + ' '+provider.State + ' '+ provider.Zip
+                  if provider.Phone
+                    p Phone: #{provider.Phone}
+                td
+                  ul
+                    each service in provider.servicesArray
+                      li #{service}
 

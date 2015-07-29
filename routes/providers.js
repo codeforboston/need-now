@@ -57,6 +57,60 @@ var constructServiceList = function(provider) {
   return services;
 };
 
+// Returns the status of the provider for the current day and time. The format
+// we expect from the 'days' field is:
+//
+// DayOfTheWeek OpenTime-CloseTime;DayOfTheWeek OpenTime-CloseTime...
+//
+// With OpenTime/CloseTime in 24hr format (1700, 1830...)
+//
+// The return value is numeric, so we can use if for sorting:
+//    0: Open (Definitely open)
+//    1: See details (couldn't decypher 'days' string)
+//    2: Unsure (Field 'days' was 'unspecified')
+//    3: Closed (Definitely closed)
+var obtainOpenStatus = function(days) {
+  var d = new Date();
+  var daysOfTheWeek = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ];
+  var todaysDay = daysOfTheWeek[d.getDay()];
+
+  var hours = parseInt((d.getHours()) + '' + d.getMinutes());
+
+  if (days == 'unspecified') {
+    return 2;
+  }
+  if (days.indexOf(todaysDay) >= 0) {
+    var result = { open: 1 };
+    _.each(days.split(';'), function(day) {
+      if (day.indexOf(todaysDay) >= 0) {
+        if (day.split(' ').length == 0) { // No hours specified, open
+          this.open = 0;
+        } else if (day.split(' ').length == 2) { // We have hours specified
+          var hoursFrom = parseInt(day.split(' ')[1].split('-')[0]);
+          var hoursTo = parseInt(day.split(' ')[1].split('-')[1]);
+          if (hours >= hoursFrom && hours <= hoursTo) {
+            this.open = 0;
+          } else {
+            this.open = 3;
+          }
+        }
+      }
+    }, result);
+    return result.open;
+  } else {
+    return 3;
+  }
+  return 1;
+};
+
 // Filter providers by gender
 var filterProvidersByGender = function(providers, answer) {
   switch (answer) {
@@ -112,6 +166,10 @@ var filterProvidersByAge = function(providers, answer) {
   });
 };
 
+var sortProvidersByOpenStatus = function(providers) {
+  return _.sortBy(providers, 'open');
+};
+
 // Filter the providers list based on the answers in the session hash, then renders the page through the callback.
 var filteredProviders = function(answers, callback) {
   // Simple GET call to the Google Apps Script, which will redirect to a block of JSON text. request traverses the redirect by default.
@@ -131,10 +189,11 @@ var filteredProviders = function(answers, callback) {
 
       for (var i = 0; i < filtered.length; i++) {
         filtered[i].servicesArray = constructServiceList(filtered[i]);
+        filtered[i].open = obtainOpenStatus(filtered[i].Days);
       }
-      
-      // console.log(filtered);
-      
+
+      filtered = sortProvidersByOpenStatus(filtered);
+
       // Run the provided callback function, most likely the page renderer
       callback(filtered);
     }

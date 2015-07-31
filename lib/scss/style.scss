@@ -36,3 +36,11 @@ a:active {
 #google_translate_element {
   zoom: 1.5;
 }
+
+tr.open {
+  background: $light-green !important;
+}
+
+tr.closed {
+  background: $light-red !important;
+}

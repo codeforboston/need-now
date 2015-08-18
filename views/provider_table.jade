@@ -28,7 +28,7 @@ block content
                   p= provider.Address
                   p= provider.City + ' '+provider.State + ' '+ provider.Zip
                   if provider.Phone
-                    p Phone: #{provider.Phone}
+                    p #[span Phone:] #[a(href="tel:#{provider.Phone}") #{provider.Phone}]
                 td
                   ul
                     each service in provider.servicesArray
@@ -47,7 +47,7 @@ block content
                   p= provider.Address
                   p= provider.City + ' '+provider.State + ' '+ provider.Zip
                   if provider.Phone
-                    p Phone: #{provider.Phone}
+                    p #[span Phone:] #[a(href="tel:#{provider.Phone}") #{provider.Phone}]
                 td
                   ul
                     each service in provider.servicesArray
@@ -66,7 +66,7 @@ block content
                   p= provider.Address
                   p= provider.City + ' '+provider.State + ' '+ provider.Zip
                   if provider.Phone
-                    p Phone: #{provider.Phone}
+                    p #[span Phone:] #[a(href="tel:#{provider.Phone}") #{provider.Phone}]
                 td
                   ul
                     each service in provider.servicesArray
@@ -86,9 +86,8 @@ block content
                   p= provider.Address
                   p= provider.City + ' '+provider.State + ' '+ provider.Zip
                   if provider.Phone
-                    p Phone: #{provider.Phone}
+                    p #[span Phone:] #[a(href="tel:#{provider.Phone}") #{provider.Phone}]
                 td
                   ul
                     each service in provider.servicesArray
                       li #{service}
-

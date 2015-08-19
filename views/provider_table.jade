@@ -17,7 +17,10 @@ block content
             when 0
               tr.open
                 td
-                  p= provider.ProgramName
+                  if provider.Link
+                    a(href=provider.Link) #{provider.ProgramName}
+                  else
+                    p= provider.ProgramName
                 td
                   p= 'Open now. Open hours:'
                   p= provider.Days
@@ -37,7 +40,10 @@ block content
             when 1
               tr.see-details
                 td
-                  p= provider.ProgramName
+                  if provider.Link
+                    a(href=provider.Link) #{provider.ProgramName}
+                  else
+                    p= provider.ProgramName
                 td
                   p= provider.Days
                 td
@@ -56,7 +62,10 @@ block content
             when 2
               tr.unsure
                 td
-                  p= provider.ProgramName
+                  if provider.Link
+                    a(href=provider.Link) #{provider.ProgramName}
+                  else
+                    p= provider.ProgramName
                 td
                   p= 'Unsure'
                 td
@@ -75,7 +84,10 @@ block content
             when 3
               tr.closed
                 td
-                  p= provider.ProgramName
+                  if provider.Link
+                    a(href=provider.Link) #{provider.ProgramName}
+                  else
+                    p= provider.ProgramName
                 td
                   p= 'Closed now. Open hours:'
                   p= provider.Days
